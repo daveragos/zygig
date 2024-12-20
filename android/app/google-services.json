@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:838474786972:android:eaf59af5ebec9fe9b8a559",
+        "mobilesdk_app_id": "1:838474786972:android:b73b17c9a6b6ad42b8a559",
         "android_client_info": {
-          "package_name": "com.zygig.zygig"
+          "package_name": "com.example.zygig"
         }
       },
       "oauth_client": [],
