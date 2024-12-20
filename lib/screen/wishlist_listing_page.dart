@@ -7,9 +7,7 @@ class WishlistListingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Wishlist'),
-      ),
+
       body: FutureBuilder(
         future: WishlistService().getWishlistProductIds(),
         builder: (context, snapshot) {

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:zygig/screen/home_page.dart';
 import 'package:zygig/screen/sign_in_page.dart';
 import 'firebase_options.dart';
 import 'package:zygig/screen/poduct_page.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
             return Center(child:CircularProgressIndicator(),);
           }
           if(snapshot.data != null){
-            return ProductListingPage();
+            return HomePage();
           }
           return SignInPage();
         }

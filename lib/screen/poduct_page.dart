@@ -20,26 +20,27 @@ class _ProductListingPageState extends State<ProductListingPage> {
       appBar: AppBar(
         title: Text('Products'),
         actions: [
-  InkWell(
-    child: _isGridView ? Icon(Icons.grid_view) : Icon(Icons.list),
-    onTap: () {
-      setState(() {
-        _isGridView = !_isGridView;
-      });
-    },
-  ),
-  IconButton(
-    icon: Icon(Icons.favorite),
-    onPressed: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => WishlistListingPage()),
-      );
-    },
-  ),
-  SizedBox(width: 25,)
-],
-
+          InkWell(
+            child: _isGridView ? Icon(Icons.grid_view) : Icon(Icons.list),
+            onTap: () {
+              setState(() {
+                _isGridView = !_isGridView;
+              });
+            },
+          ),
+          // IconButton(
+          //   icon: Icon(Icons.favorite),
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (context) => WishlistListingPage()),
+          //     );
+          //   },
+          // ),
+          SizedBox(
+            width: 25,
+          )
+        ],
       ),
       body: FutureBuilder(
           future: FirebaseFirestore.instance.collection('products').get(),
@@ -66,9 +67,9 @@ class _ProductListingPageState extends State<ProductListingPage> {
           SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       itemCount: products.length,
       itemBuilder: (context, index) {
-
         final prod = products[index];
         return Card(
+          color: Colors.white,
           child: Column(
             children: [
               Image.network(
@@ -76,7 +77,6 @@ class _ProductListingPageState extends State<ProductListingPage> {
                 width: 150,
                 height: 150,
                 fit: BoxFit.contain,
-
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -93,8 +93,7 @@ class _ProductListingPageState extends State<ProductListingPage> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Icon(
-                              Icons.favorite_border);
+                          return Icon(Icons.favorite_border);
                         }
                         final isFavorite = snapshot.data ?? false;
                         return Icon(
@@ -135,7 +134,6 @@ class _ProductListingPageState extends State<ProductListingPage> {
                   width: 50,
                   child: Image.network(
                     prod.imageUrl,
-
                   )),
               title: Text(prod.name),
               subtitle: Text(prod.price.toString()),
@@ -144,8 +142,7 @@ class _ProductListingPageState extends State<ProductListingPage> {
                   future: WishlistService().isInWishlist(prod.id),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Icon(
-                          Icons.favorite_border);
+                      return Icon(Icons.favorite_border);
                     }
                     final isFavorite = snapshot.data ?? false;
                     return Icon(
