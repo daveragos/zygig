@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "838474786972",
+    "project_id": "zygig-shop",
+    "storage_bucket": "zygig-shop.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:838474786972:android:eaf59af5ebec9fe9b8a559",
+        "android_client_info": {
+          "package_name": "com.zygig.zygig"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzx6G5m3jrwmYeoPhKvc4rNW4sgtMbWm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
