@@ -96,6 +96,9 @@ class _ProductListingPageState extends State<ProductListingPage> {
                 width: 150,
                 height: 150,
                 fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace){
+                  return Image.asset('assets/image.png');
+                },
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -153,6 +156,9 @@ class _ProductListingPageState extends State<ProductListingPage> {
                   width: 50,
                   child: Image.network(
                     prod.imageUrl,
+                errorBuilder: (context, error, stackTrace){
+                  return Image.asset('assets/image.png');
+                },
                   )),
               title: Text(prod.name),
               subtitle: Text(prod.price.toString()),
