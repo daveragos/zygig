@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:zygig/screen/home_page.dart';
 import 'package:zygig/screen/sign_in_page.dart';
 import 'firebase_options.dart';
-import 'package:zygig/screen/poduct_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

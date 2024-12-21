@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zygig/model/product.dart';
-import 'package:zygig/screen/wishlist_listing_page.dart';
+import 'package:zygig/service/product_service.dart';
 import 'package:zygig/service/wishlist_service.dart';
 
 class ProductListingPage extends StatefulWidget {
@@ -14,50 +15,68 @@ class ProductListingPage extends StatefulWidget {
 class _ProductListingPageState extends State<ProductListingPage> {
   bool _isGridView = true;
 
+  String user = '';
+
+  @override
+  void initState() {
+    super.initState();
+    user = FirebaseAuth.instance.currentUser!.email!;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Products'),
-        actions: [
-          InkWell(
-            child: _isGridView ? Icon(Icons.grid_view) : Icon(Icons.list),
-            onTap: () {
-              setState(() {
-                _isGridView = !_isGridView;
-              });
-            },
+        title: Text('Welcome Back, $user'),
+      ),
+
+      // IconButton(
+      //   icon: Icon(Icons.favorite),
+      //   onPressed: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => WishlistListingPage()),
+      //     );
+      //   },
+      // ),
+
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Products', style: TextStyle(fontSize: 20)),
+                  InkWell(
+                    child:
+                        _isGridView ? Icon(Icons.grid_view) : Icon(Icons.list),
+                    onTap: () {
+                      setState(() {
+                        _isGridView = !_isGridView;
+                      });
+                    },
+                  ),
+                ]),
           ),
-          // IconButton(
-          //   icon: Icon(Icons.favorite),
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(builder: (context) => WishlistListingPage()),
-          //     );
-          //   },
-          // ),
-          SizedBox(
-            width: 25,
-          )
+          Expanded(
+            child: StreamBuilder(
+                stream: ProductService().getProducts(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  if (!snapshot.hasData || (snapshot.data!.isEmpty)) {
+                    return Center(child: Text('There is no product'));
+                  }
+                  final products = snapshot.data!;
+                  return _isGridView
+                      ? _buildGridView(products: products)
+                      : _buildListView(products: products);
+                }),
+          ),
         ],
       ),
-      body: FutureBuilder(
-          future: FirebaseFirestore.instance.collection('products').get(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            }
-            if (!snapshot.hasData) {
-              return Center(child: Text('There is no product'));
-            }
-            final data = snapshot.data;
-            final products =
-                data!.docs.map((doc) => Product.fromFirestore(doc)).toList();
-            return _isGridView
-                ? _buildGridView(products: products)
-                : _buildListView(products: products);
-          }),
     );
   }
 

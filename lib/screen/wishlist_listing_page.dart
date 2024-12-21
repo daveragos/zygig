@@ -4,10 +4,15 @@ import 'package:zygig/model/product.dart';
 import 'package:zygig/service/wishlist_service.dart';
 
 class WishlistListingPage extends StatelessWidget {
+  const WishlistListingPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      appBar: AppBar(
+        title: Text('Wish List'),
+        centerTitle: true,
+      ),
       body: FutureBuilder(
         future: WishlistService().getWishlistProductIds(),
         builder: (context, snapshot) {
@@ -47,7 +52,8 @@ class WishlistListingPage extends StatelessWidget {
                       trailing: IconButton(
                         icon: Icon(Icons.delete, color: Colors.red),
                         onPressed: () async {
-                          await WishlistService().removeFromWishlist(product.id);
+                          await WishlistService()
+                              .removeFromWishlist(product.id);
                         },
                       ),
                     ),

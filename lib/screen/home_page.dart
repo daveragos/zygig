@@ -14,13 +14,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 1;
-  String user = '';
-
-  @override
-  void initState() {
-    super.initState();
-    user = FirebaseAuth.instance.currentUser!.email!;
-  }
 
   final List<Widget> _widgetOptions = <Widget>[
     WishlistListingPage(),
@@ -37,9 +30,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Welcome Back, $user'),
-      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

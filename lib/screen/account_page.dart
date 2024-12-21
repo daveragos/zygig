@@ -4,10 +4,19 @@ import 'package:flutter/material.dart';
 class AccountPage extends StatelessWidget {
   final User? user = FirebaseAuth.instance.currentUser;
 
+  AccountPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      appBar: AppBar(title: Text('Account Info'), actions: [
+        IconButton(
+          onPressed: () async {
+            await FirebaseAuth.instance.signOut();
+          },
+          icon: Icon(Icons.logout),
+        ),
+      ]),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -38,15 +47,6 @@ class AccountPage extends StatelessWidget {
               onTap: () {
                 // Handle setting 2 tap
               },
-            ),
-            Spacer(),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  // Handle logout
-                },
-                child: Text('Logout'),
-              ),
             ),
           ],
         ),
